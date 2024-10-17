@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seleccionar Versión</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Seleccionar Versión</h1>
+    <label><input type="radio" name="version" value="1.20.4 Fabric" /> 1.20.4 Fabric</label><br />
+    <label><input type="radio" name="version" value="1.20.4 Forge" /> 1.20.4 Forge</label><br />
+    <label><input type="radio" name="version" value="1.20.4 Vanilla" /> 1.20.4 Vanilla</label><br />
+    <button onclick="saveVersion()">Guardar y Cerrar</button>
+    <button onclick="goBack()">Volver</button>
+  </div>
+
+  <script>
+    function saveVersion() {
+      const selectedVersion = document.querySelector('input[name="version"]:checked').value;
+      localStorage.setItem('overmaster_selected_version', selectedVersion);
+      alert("Versión seleccionada: " + selectedVersion);
+      goBack();
+    }
+
+    function goBack() {
+      window.location.href = "../index.html";
+    }
+  </script>
+</body>
+</html>

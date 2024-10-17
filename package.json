@@ -1,0 +1,22 @@
+{
+  "name": "overmaster-launcher",
+  "version": "1.0.0",
+  "description": "Lanzador de minecraft", 
+  "author": "Valentinhere1", 
+  "main": "app.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.overmaster.launcher",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/.overmaster/images/icon.ico"
+    }
+  },
+  "devDependencies": {
+    "electron": "^33.0.1",
+    "electron-builder": "^25.1.8"
+  }
+}

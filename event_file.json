@@ -1,0 +1,9 @@
+{
+    "tipo": "Misión semanal",
+    "titulo": "¡Recoge diamantes!",
+    "contenido": "Recoge 10 diamantes en el bioma del Nether esta semana. ¡No te pierdas esta oportunidad!",
+    "icon": "warning", 
+    "icon_color": "red",
+    "urgency": "high"
+  }
+  

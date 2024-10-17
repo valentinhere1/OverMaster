@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OverMaster Launcher</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById('minimize-btn').addEventListener('click', () => {
+        const window = require('electron').remote.getCurrentWindow();
+        window.minimize();
+      });
+  
+      document.getElementById('close-btn').addEventListener('click', () => {
+        const window = require('electron').remote.getCurrentWindow();
+        window.close();
+      });
+      
+      // Funciones de login, misiones, etc.
+      document.getElementById("launch-button").addEventListener("click", login);
+    });
+  
+    function login() {
+      const username = document.getElementById("username").value;
+      if (username) {
+        saveConfig({ username: username });
+        showMainContainer();
+      } else {
+        alert("Por favor, ingresa un nombre de usuario.");
+      }
+    }
+  
+    function showMainContainer() {
+      document.getElementById("login-container").style.display = "none";
+      document.getElementById("main-container").style.display = "block";
+      loadMissions();
+    }
+  
+    async function loadMissions() {
+      try {
+        const response = await fetch('https://raw.githubusercontent.com/tu_usuario/tu_repositorio/main/event_file.json');
+        const data = await response.json();
+        document.getElementById('missions-message').textContent = data.mission_message;
+      } catch (error) {
+        document.getElementById('missions-message').textContent = 'Error al cargar las misiones.';
+      }
+    }
+  
+    function saveConfig(data) {
+      let config = localStorage.getItem('overmaster_config');
+      if (!config) {
+        config = {};
+      } else {
+        config = JSON.parse(config);
+      }
+      Object.assign(config, data);
+      localStorage.setItem('overmaster_config', JSON.stringify(config));
+    }
+  </script>
+  
+  <script>
+    async function loadSkin(username) {
+      const skinUrl = `https://mineskin.eu/skin/${username}`;
+      const response = await fetch(skinUrl);
+      if (response.ok) {
+        const data = await response.json();
+        document.getElementById("skin-image").src = data.skin.url; // Cambia la fuente de la imagen de la skin
+      } else {
+        console.error("Error al cargar la skin");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadSkin("Ghost"); // Cargar la skin para el usuario "Ghost"
+    });
+
+    document.getElementById("launch-button").addEventListener("click", () => {
+  const loadingBar = document.getElementById("loading-bar");
+  const progressBar = document.getElementById("progress");
+  loadingBar.style.display = "block"; // Mostrar la barra de progreso
+
+  let width = 0;
+  
+  // Simular carga de diferentes etapas
+  const stages = [
+    { name: "Cargando versión del juego", duration: 2000 }, // Duración en milisegundos
+    { name: "Cargando mods", duration: 3000 },
+    { name: "Configurando opciones", duration: 1500 },
+    { name: "Completando", duration: 1000 },
+  ];
+
+  let currentStage = 0;
+
+  function loadNextStage() {
+    if (currentStage < stages.length) {
+      const stage = stages[currentStage];
+      console.log(stage.name); // Puedes mostrar mensajes en la consola para saber qué etapa está cargando
+
+      const interval = setInterval(() => {
+        if (width >= (currentStage + 1) * (100 / stages.length)) {
+          clearInterval(interval);
+          currentStage++;
+          loadNextStage(); // Cargar la siguiente etapa
+        } else {
+          width += 1; // Incrementar gradualmente el progreso
+          progressBar.style.width = width + "%";
+        }
+      }, stage.duration / (100 / stages.length)); // Controlar la velocidad de la barra según la duración de cada etapa
+    } else {
+      // Cuando todas las etapas hayan terminado
+      setTimeout(() => {
+        closeLauncherAndLaunchGame(); // Cerrar el launcher y abrir el juego
+      }, 500); // Un pequeño retardo antes de cerrar
+    }
+  }
+
+  loadNextStage(); // Iniciar la primera etapa de carga
+});
+
+function closeLauncherAndLaunchGame() {
+  alert("Lanzando el juego..."); // Puedes cambiar esto por cualquier acción o mensaje que desees
+  window.close(); // Cierra el launcher
+  
+  // Código para abrir el juego
+  // Como no puedes abrir aplicaciones directamente desde JavaScript en un navegador, 
+  // aquí tendrías que hacer una integración a nivel de software del launcher.
+  // Podrías hacerlo mediante una aplicación externa, scripts de shell, o un archivo ejecutable nativo en el equipo.
+}
+
+
+  </script>
+</head>
+<body>
+    <div id="launcher-container">
+      <button id="minimize-btn">Minimizar</button>
+      <button id="close-btn">Cerrar</button>           
+      <div id="sidebar">
+        <div id="user-info">
+          <img
+            id="skin-image"
+            src="https://static.minecraft.net/skin/WishPixel_"
+            alt="Skin"
+          />
+          <h3 style="color: white">Ghost</h3>
+          <!-- Nombre de usuario -->
+        </div>
+        <button id="launch-button">
+          <i class="bx bx-play-circle"></i> Lanzar Juego
+        </button>
+        <button id="versions-button">
+          <i class="bx bx-layer"></i> Versiones
+        </button>
+        <button id="mods-button">
+          <i class="bx bx-package"></i> Mods
+        </button>
+        <button id="settings-button">
+          <i class="bx bx-cog"></i> Configuración
+        </button>
+        <div id="loading-bar">
+            <div id="progress"></div>
+          </div>
+      </div>
+
+      <div id="content">
+        <h1 style="margin-left:255px;margin-top:-15x;border-radius:10px; width:315px;color:#606060;background:#202020;">OverMaster Launcher</h1>
+        <i id="alert-icon" class="bx bx-error-circle"></i>
+        <div id="event-popup">
+          <h3>Misión semanal</h3>
+          <p>Recoge 10 diamantes en el bioma del Nether esta semana.</p>
+        </div>        
+        <div id="loading-bar">
+          <div id="progress"></div>
+        </div>
+      </div>
+    </div>
+    <script src="update-check.js"></script>
+  </body>
+</html>
