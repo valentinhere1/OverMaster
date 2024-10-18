@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const { autoUpdater } = require('electron-updater'); // Añadimos autoUpdater para manejar las actualizaciones
 
 const ffmpegPath = path.join(__dirname, 'ffmpeg.dll');
 if (fs.existsSync(ffmpegPath)) {
@@ -21,7 +22,38 @@ function createWindow() {
       contextIsolation: false,
     }
   });
+  
   mainWindow.loadFile('index.html');
+
+  // Cuando la ventana esté lista, verifica actualizaciones del repositorio
+  mainWindow.once('ready-to-show', () => {
+    checkForLauncherUpdates();  // Llama a la función que verifica actualizaciones del launcher
+  });
+}
+
+// Verifica si hay actualizaciones en el repositorio de GitHub
+async function checkForLauncherUpdates() {
+  const repoUrl = "https://api.github.com/repos/valentinhere1/OverMaster/commits?sha=main";
+  
+  try {
+    const response = await fetch(repoUrl);
+    if (response.ok) {
+      const commits = await response.json();
+      const latestCommitHash = commits[0].sha;
+
+      const lastLauncherVersion = localStorage.getItem('lastLauncherVersion');
+      
+      if (lastLauncherVersion !== latestCommitHash) {
+        console.log("Hay una nueva versión disponible.");
+        autoUpdater.checkForUpdatesAndNotify();  // Ejecuta la verificación y notificación de actualizaciones del launcher
+        localStorage.setItem('lastLauncherVersion', latestCommitHash);
+      }
+    } else {
+      console.error("Error al verificar actualizaciones del launcher:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error de conexión:", error);
+  }
 }
 
 app.whenReady().then(() => {
@@ -34,4 +66,14 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
+});
+
+// Eventos del autoUpdater
+autoUpdater.on('update-available', () => {
+  console.log('Nueva actualización disponible.');
+});
+
+autoUpdater.on('update-downloaded', () => {
+  console.log('Actualización descargada. Instalando...');
+  autoUpdater.quitAndInstall();  // Instalamos y reiniciamos la aplicación automáticamente
 });

@@ -1,5 +1,4 @@
 
-=======
 # OverMaster Launcher
 
 Bienvenido al **OverMaster Launcher**, diseñado exclusivamente para los miembros del **Clan OverMaster**. Esta herramienta te permite acceder a las **misiones semanales** y lanzar diferentes versiones de **Minecraft** de manera sencilla.
