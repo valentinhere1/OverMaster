@@ -1,11 +1,11 @@
-body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: black;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;  /* Asegúrate de que no haya scroll innecesario */
+  background-color: #202020; /* Cambia el color de fondo si lo deseas */
+}
 
   #launcher-container {
     background: url("https://th.bing.com/th/id/R.5de54fb6e7924d9278538e2c85e766bc?rik=BN9aM0wiUAo64Q&pid=ImgRaw&r=0")
@@ -16,6 +16,11 @@ body {
     border-radius: 15px;
     position: relative;
     overflow: hidden;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
  /* Botones de cerrar y minimizar */
  #window-controls {

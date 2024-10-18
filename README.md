@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-# OverMaster
-OverMaster
+
 =======
 # OverMaster Launcher
 
@@ -25,4 +23,3 @@ Este launcher es exclusivo para miembros del clan. Si deseas contribuir, por fav
 ---
 
 _Disfruta de las misiones y juega en las versiones de Minecraft que prefieras!_
->>>>>>> eef8a6c (Initial commit)

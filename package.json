@@ -1,8 +1,8 @@
 {
   "name": "overmaster-launcher",
   "version": "1.0.0",
-  "description": "Lanzador de minecraft", 
-  "author": "Valentinhere1", 
+  "description": "Lanzador de minecraft",
+  "author": "Valentinhere1",
   "main": "app.js",
   "scripts": {
     "start": "electron .",
@@ -12,9 +12,21 @@
     "appId": "com.overmaster.launcher",
     "win": {
       "target": "nsis",
-      "icon": "assets/.overmaster/images/icon.ico"
-    }
+      "icon": "assets/images/icon.png"
+    },
+    "extraResources": [
+      {
+        "from": "./ffmpeg.dll",
+        "to": "ffmpeg.dll"
+      }
+    ]
   },
+  "files": [
+    "app/**/*",
+    "assets/**/*",
+    "node_modules/**/*",
+    "ffmpeg.dll"
+  ],
   "devDependencies": {
     "electron": "^33.0.1",
     "electron-builder": "^25.1.8"
