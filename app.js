@@ -1,8 +1,9 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron'); // Añadido ipcMain
 const path = require('path');
 const fs = require('fs');
 const { autoUpdater } = require('electron-updater'); // Añadimos autoUpdater para manejar las actualizaciones
 
+// Verificar la existencia de ffmpeg.dll
 const ffmpegPath = path.join(__dirname, 'ffmpeg.dll');
 if (fs.existsSync(ffmpegPath)) {
   console.log('ffmpeg.dll found at', ffmpegPath);
@@ -22,12 +23,37 @@ function createWindow() {
       contextIsolation: false,
     }
   });
-  
+
+  // Cargar el archivo HTML principal
   mainWindow.loadFile('index.html');
 
-  // Cuando la ventana esté lista, verifica actualizaciones del repositorio
+  // Escuchar eventos del renderer para minimizar y cerrar la ventana
+  ipcMain.on('minimize-window', () => {
+    mainWindow.minimize();
+  });
+
+  ipcMain.on('close-window', () => {
+    mainWindow.close();
+  });
+
+  // Abrir el popup de selección de versión
+  ipcMain.on('open-version-popup', () => {
+    const popup = new BrowserWindow({
+      width: 400,
+      height: 300,
+      modal: true, // Hacer que la ventana sea modal
+      parent: mainWindow, // Hacer que el popup dependa de la ventana principal
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+      }
+    });
+    popup.loadFile('poppup/versions.html'); // Corregido: Cambiado 'popups' a 'poppup'
+  });
+
+  // Cuando la ventana esté lista, verificar actualizaciones del repositorio
   mainWindow.once('ready-to-show', () => {
-    checkForLauncherUpdates();  // Llama a la función que verifica actualizaciones del launcher
+    checkForLauncherUpdates();  // Verificar actualizaciones
   });
 }
 
@@ -45,7 +71,7 @@ async function checkForLauncherUpdates() {
       
       if (lastLauncherVersion !== latestCommitHash) {
         console.log("Hay una nueva versión disponible.");
-        autoUpdater.checkForUpdatesAndNotify();  // Ejecuta la verificación y notificación de actualizaciones del launcher
+        autoUpdater.checkForUpdatesAndNotify();  // Ejecutar la verificación y notificación de actualizaciones del launcher
         localStorage.setItem('lastLauncherVersion', latestCommitHash);
       }
     } else {

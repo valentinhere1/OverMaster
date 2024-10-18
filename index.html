@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OverMaster Launcher</title>
   <link rel="stylesheet" href="style.css" />
-
+  <link
+  href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+  rel="stylesheet"
+/>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById('minimize-btn').addEventListener('click', () => {
@@ -61,25 +64,36 @@
   </script>
   
   <script>
-    async function loadSkin(username) {
-      const skinUrl = `https://mineskin.eu/skin/${username}`;
-      const response = await fetch(skinUrl);
-      if (response.ok) {
-        const data = await response.json();
-        document.getElementById("skin-image").src = data.skin.url; // Cambia la fuente de la imagen de la skin
-      } else {
-        console.error("Error al cargar la skin");
+         async function loadSkin(username) {
+        const skinUrl = `https://mineskin.eu/skin/${username}`;
+        const response = await fetch(skinUrl);
+        if (response.ok) {
+          const data = await response.json();
+          document.getElementById("skin-image").src = data.skin.url; // Cambia la fuente de la imagen de la skin
+        } else {
+          console.error("Error al cargar la skin");
+        }
       }
-    }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      loadSkin("Ghost"); // Cargar la skin para el usuario "Ghost"
-    });
+      document.addEventListener("DOMContentLoaded", () => {
+        loadSkin("default"); // Cargar la skin para el usuario "Ghost"
+      });
+      
+      
+      document.addEventListener("DOMContentLoaded", () => {
+  const alertIcon = document.getElementById("alert-icon");
+  const eventPopup = document.getElementById("event-popup");
 
-    document.getElementById("launch-button").addEventListener("click", () => {
+  alertIcon.addEventListener("click", () => {
+    eventPopup.style.display = eventPopup.style.display === "none" ? "block" : "none";
+  });
+});
+
+document.getElementById("launch-button").addEventListener("click", () => {
   const loadingBar = document.getElementById("loading-bar");
   const progressBar = document.getElementById("progress");
-  loadingBar.style.display = "block"; // Mostrar la barra de progreso
+  loadingBar.style.display = "block"; 
+  // Mostrar la barra de progreso
 
   let width = 0;
   
@@ -128,7 +142,19 @@ function closeLauncherAndLaunchGame() {
   // aquí tendrías que hacer una integración a nivel de software del launcher.
   // Podrías hacerlo mediante una aplicación externa, scripts de shell, o un archivo ejecutable nativo en el equipo.
 }
+const { ipcRenderer } = require('electron');
 
+document.getElementById('minimize-btn').addEventListener('click', () => {
+  ipcRenderer.send('minimize-window');
+});
+
+document.getElementById('close-btn').addEventListener('click', () => {
+  ipcRenderer.send('close-window');
+});
+
+document.getElementById('versions-button').addEventListener('click', () => {
+  ipcRenderer.send('open-version-popup');
+});
 
   </script>
 </head>
@@ -143,9 +169,12 @@ function closeLauncherAndLaunchGame() {
             src="https://static.minecraft.net/skin/WishPixel_"
             alt="Skin"
           />
-          <h3 style="color: white">Ghost</h3>
+          <h3 style="color: white"></h3>
           <!-- Nombre de usuario -->
         </div>
+        <button id="launch-button">
+          <i class="bx bx-play-circle"></i> Lanzar Juego
+        </button>
         <button id="versions-button">
           <i class="bx bx-layer"></i> Versiones
         </button>
@@ -172,6 +201,7 @@ function closeLauncherAndLaunchGame() {
         </div>
       </div>
     </div>
+    <script src="app.js"></script>
     <script src="update-check.js"></script>
   </body>
 </html>

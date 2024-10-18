@@ -21,45 +21,22 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+  }#minimize-btn, #close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px; /* Ajusta el margen según sea necesario */
+    padding: 5px 10px;
+    background-color: #202020;
+    color: white;
+    border: none;
+    cursor: pointer;
   }
- /* Botones de cerrar y minimizar */
- #window-controls {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-}
-
-#window-controls button {
-  background-color: gray;
-  color: white;
-  width: 30px;
-  height: 30px;
-  margin: 0 5px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-#window-controls button:hover {
-  background-color: darkgray;
-}
-
-#window-controls .close-btn {
-  background-color: red;
-}
-
-#window-controls .close-btn:hover {
-  background-color: darkred;
-}
-
-#window-controls .minimize-btn {
-  background-color: yellow;
-}
-
-#window-controls .minimize-btn:hover {
-  background-color: goldenrod;
-}
+  
+  #close-btn {
+    right: 50px; /* Esto moverá el botón Cerrar más hacia la izquierda */
+  }
+  
   #alert-icon {
     position: absolute;
     top: 0px;
