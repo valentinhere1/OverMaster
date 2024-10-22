@@ -19,6 +19,36 @@ html, body {
   height: 100%;
   width: 100%;
 }
+   .title-bar .icon {
+      width: 24px;
+      height: 24px;
+      background: url('assets/images/icon.png') no-repeat center center;
+      background-size: contain;
+      margin-right: 10px;
+    }
+
+    .title-bar .title {
+      font-size: 14px;
+    }
+
+    .title-bar .window-controls {
+      display: flex;
+      align-items: center;
+      -webkit-app-region: no-drag; /* Permite hacer clic en botones */
+    }
+
+    .title-bar .window-controls button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .title-bar .window-controls button:hover {
+      background-color: red;
+    }
+
 
 #minimize-btn, #close-btn {
   position: absolute;
