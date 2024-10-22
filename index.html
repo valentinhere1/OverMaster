@@ -36,33 +36,6 @@ document.getElementById("minimize-btn").addEventListener("click", () => {
         document.getElementById('settings-popup').style.display = 'block';
       });
     });
-
-    function login() {
-      const username = document.getElementById("username").value;
-      if (username) {
-        saveConfig({ username: username });
-        showMainContainer();
-      } else {
-        alert("Por favor, ingresa un nombre de usuario.");
-      }
-    }
-
-    function showMainContainer() {
-      document.getElementById("login-container").style.display = "none";
-      document.getElementById("main-container").style.display = "block";
-      loadMissions();
-    }
-
-    function saveConfig(data) {
-      let config = localStorage.getItem('overmaster_config');
-      if (!config) {
-        config = {};
-      } else {
-        config = JSON.parse(config);
-      }
-      Object.assign(config, data);
-      localStorage.setItem('overmaster_config', JSON.stringify(config));
-    }
   </script>
 </head>
 <body>
@@ -93,6 +66,22 @@ document.getElementById("minimize-btn").addEventListener("click", () => {
 
     <div id="content">
       <div class="titles">OverMaster - Launcher</div>
+<div id="account-popup">
+        <h1>Iniciar sesión</h1>
+        <p>Proporciona un nombre de usuario o inicia sesión con tu cuenta de Microsoft.</p>
+        <!-- Campo de nombre de usuario no premium -->
+        <label for="nickname">Nombre de usuario (No Premium):</label>
+        <input type="text" id="nickname" placeholder="Ingresa un nombre no premium">
+
+        <!-- Botón para iniciar sesión con nombre no premium -->
+        <button id="login-button">Ingresar al launcher</button>
+
+        <!-- Botón para iniciar sesión con Microsoft -->
+        <button id="microsoft-login">Iniciar sesión con Microsoft</button>
+
+        <p>Puedes cambiar de cuenta dentro del launcher, en el apartado de configuración.</p>
+      </div>
+    </div>
       <i id="alert-icon" class="bx bx-error-circle mission-icon"></i>
       <div id="mission-popup" style="display: none;">
         <div id="mission-content">
@@ -172,11 +161,7 @@ document.getElementById("minimize-btn").addEventListener("click", () => {
     </div>
   </div>
   
-<!-- Popup de inicio de sesión -->
-<div id="login-popup">
-  <iframe src="popup/cuenta.html" id="login-iframe" frameborder="0"></iframe>
-  <button id="close-popup">Cerrar</button>
-</div>
+
 
   <!-- Popup para Configuración -->
   <div id="settings-popup" class="popup" style="display:none;">
@@ -187,6 +172,46 @@ document.getElementById("minimize-btn").addEventListener("click", () => {
       <button onclick="closePopup('settings-popup')">Volver</button>
     </div>
   </div>
+<script>
+    // Verificar si ya hay un usuario guardado en localStorage
+    const storedUsername = localStorage.getItem('overmaster_username');
+    const skinImage = document.getElementById('skin-image');
+    const userName = document.getElementById('user-name');
+    const loginPopup = document.getElementById('login-popup');
+
+    // Si no hay un usuario guardado, mostrar el popup de inicio de sesión
+    if (!storedUsername) {
+      loginPopup.style.display = 'flex'; // Mostrar el popup
+    } else {
+      // Mostrar la información del usuario guardado
+      userName.textContent = storedUsername;
+      skinImage.src = `https://mineskin.eu/armor/bust/${storedUsername}/100.png`;
+    }
+
+    // Evento del botón para ingresar con nombre no premium
+    document.getElementById("login-button").addEventListener("click", () => {
+      const nickname = document.getElementById("nickname").value.trim();
+
+      if (nickname) {
+        // Guardar el nombre de usuario en localStorage
+        localStorage.setItem('overmaster_username', nickname);
+
+        // Actualizar la información de usuario en el sidebar
+        userName.textContent = nickname;
+        skinImage.src = `https://mineskin.eu/armor/bust/${nickname}/100.png`;
+
+        // Ocultar el popup de inicio de sesión
+        loginPopup.style.display = 'none';
+      } else {
+        alert("Por favor, ingresa un nombre de usuario.");
+      }
+    });
+
+    // Lógica para iniciar sesión con Microsoft (esto sería más complicado y depende de la API de Microsoft)
+    document.getElementById("microsoft-login").addEventListener("click", () => {
+      alert("Iniciar sesión con Microsoft - No implementado.");
+    });
+  </script>
   <script>
   window.onload = function() {
     // Mostrar el popup de inicio de sesión cuando la página se carga
