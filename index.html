@@ -6,14 +6,24 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
   <script>
+
+const { remote } = require('electron');
+
+document.getElementById("close-btn").addEventListener("click", () => {
+  const window = remote.getCurrentWindow();
+  window.close(); // Cierra la ventana
+});
+
+document.getElementById("minimize-btn").addEventListener("click", () => {
+  const window = remote.getCurrentWindow();
+  window.minimize(); // Minimiza la ventana
+});
+  </script>
+  <script>
+
     document.addEventListener("DOMContentLoaded", () => {
       // Botones para minimizar y cerrar la ventana
    
-
-  document.getElementById('close-btn').addEventListener('click', () => {
-  require('electron').ipcRenderer.send('close-app');
-});
-
       document.getElementById("launch-button").addEventListener("click", login);
 
       // Mostrar y ocultar pop-up de versiones
@@ -69,9 +79,9 @@
     <div id="sidebar">
       <div id="user-info">
         <img id="skin-image" src="https://mineskin.eu/armor/bust/Valentinhere1/100.png
-" alt="Skin"/>Valentinhere1
+" alt="Skin"/>
 
-        <h3 style="color: white"></h3>
+        <h3 style="color: white">Valentinhere1</h3>
       </div>
       <button id="launch-button"><i class="bx bx-play-circle"></i> Lanzar Juego</button>
       <button id="versions-button"><i class="bx bx-layer"></i> Versiones</button>
