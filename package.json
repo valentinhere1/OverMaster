@@ -1,6 +1,6 @@
 {
   "name": "overmaster-launcher",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Lanzador de minecraft",
   "author": "Valentinhere1",
   "main": "app.js",
@@ -12,13 +12,15 @@
     "appId": "com.overmaster.launcher",
     "win": {
       "target": "nsis",
+      "artifactName": "OverMaster{version}.exe",
       "icon": "assets/images/icon.png"
     },
     "publish": [
       {
         "provider": "github",
         "owner": "valentinhere1",
-        "repo": "OverMaster"
+        "repo": "OverMaster",
+        "releaseType": "release"
       }
     ],
     "extraResources": [
@@ -36,7 +38,8 @@
   ],
   "devDependencies": {
     "electron": "^33.0.1",
-    "electron-builder": "^25.1.8"
+    "electron-builder": "^25.1.8",
+    "electron-packager": "^17.1.2"
   },
   "dependencies": {
     "electron-updater": "^6.3.9"

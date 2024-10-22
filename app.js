@@ -1,7 +1,7 @@
-const { app, BrowserWindow, ipcMain } = require('electron'); // Añadido ipcMain
+const { app, BrowserWindow, ipcMain } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
-const { autoUpdater } = require('electron-updater'); // Añadimos autoUpdater para manejar las actualizaciones
 
 // Verificar la existencia de ffmpeg.dll
 const ffmpegPath = path.join(__dirname, 'ffmpeg.dll');
@@ -15,8 +15,9 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: false,  // Elimina el borde de la ventana
-    transparent: true,  // Hace transparente el fondo
+    resizable: false,  // Deshabilitar el redimensionamiento
+    frame: false,  // Eliminar el borde de la ventana
+    transparent: true,  // Fondo transparente
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
@@ -24,8 +25,36 @@ function createWindow() {
     }
   });
 
-  // Cargar el archivo HTML principal
-  mainWindow.loadFile('index.html');
+  // Cargar la pantalla de carga o la pantalla principal dependiendo de si hay actualizaciones
+  mainWindow.loadFile('loading.html');  // Pantalla de "Buscando actualizaciones"
+
+  // Una vez que la ventana está lista, buscamos actualizaciones
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdates();
+  });
+
+  // Si hay una actualización disponible
+  autoUpdater.on('update-available', () => {
+    mainWindow.loadFile('update.html');  // Pantalla de "Descargando actualización..."
+  });
+
+  // Cuando la actualización ha sido descargada
+  autoUpdater.on('update-downloaded', () => {
+    autoUpdater.quitAndInstall();  // Instalar y reiniciar
+  });
+
+  // Si no hay actualizaciones
+  autoUpdater.on('update-not-available', () => {
+    mainWindow.loadFile('index.html');  // Ejecutar el launcher
+    // También actualizamos el archivo de eventos al iniciar
+    updateEventFile();
+  });
+
+  // Si hay algún error en la búsqueda de actualizaciones
+  autoUpdater.on('error', (error) => {
+    console.error('Error al buscar actualizaciones:', error);
+    mainWindow.loadFile('index.html');  // Si hay un error, ejecuta el launcher de todos modos
+  });
 
   // Escuchar eventos del renderer para minimizar y cerrar la ventana
   ipcMain.on('minimize-window', () => {
@@ -41,19 +70,14 @@ function createWindow() {
     const popup = new BrowserWindow({
       width: 400,
       height: 300,
-      modal: true, // Hacer que la ventana sea modal
-      parent: mainWindow, // Hacer que el popup dependa de la ventana principal
+      modal: true,
+      parent: mainWindow,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false
       }
     });
-    popup.loadFile('poppup/versions.html'); // Corregido: Cambiado 'popups' a 'poppup'
-  });
-
-  // Cuando la ventana esté lista, verificar actualizaciones del repositorio
-  mainWindow.once('ready-to-show', () => {
-    checkForLauncherUpdates();  // Verificar actualizaciones
+    popup.loadFile('poppup/versions.html');  // Corregido: 'popup' a 'poppup'
   });
 }
 
@@ -70,12 +94,33 @@ async function checkForLauncherUpdates() {
       const lastLauncherVersion = localStorage.getItem('lastLauncherVersion');
       
       if (lastLauncherVersion !== latestCommitHash) {
-        console.log("Hay una nueva versión disponible.");
-        autoUpdater.checkForUpdatesAndNotify();  // Ejecutar la verificación y notificación de actualizaciones del launcher
+        alert("Hay una nueva versión del launcher disponible. Actualiza para obtener las últimas correcciones.");
         localStorage.setItem('lastLauncherVersion', latestCommitHash);
       }
     } else {
       console.error("Error al verificar actualizaciones del launcher:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error de conexión:", error);
+  }
+}
+
+// Actualiza el archivo de eventos desde el repositorio
+async function updateEventFile() {
+  const eventFileUrl = `https://raw.githubusercontent.com/valentinhere1/OverMaster/main/event_file.json`;
+
+  try {
+    const response = await fetch(eventFileUrl);
+    if (response.ok) {
+      const eventData = await response.json();
+      console.log("Event file actualizado:", eventData);
+
+      // Guardar los datos del event_file en localStorage
+      localStorage.setItem('eventData', JSON.stringify(eventData));
+
+      alert("Archivo de eventos actualizado.");
+    } else {
+      console.error("Error al descargar el event_file:", response.statusText);
     }
   } catch (error) {
     console.error("Error de conexión:", error);
@@ -92,14 +137,4 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
-});
-
-// Eventos del autoUpdater
-autoUpdater.on('update-available', () => {
-  console.log('Nueva actualización disponible.');
-});
-
-autoUpdater.on('update-downloaded', () => {
-  console.log('Actualización descargada. Instalando...');
-  autoUpdater.quitAndInstall();  // Instalamos y reiniciamos la aplicación automáticamente
 });

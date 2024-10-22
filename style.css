@@ -7,139 +7,218 @@ html, body {
   background-color: #202020; /* Cambia el color de fondo si lo deseas */
 }
 
-  #launcher-container {
-    background: url("https://th.bing.com/th/id/R.5de54fb6e7924d9278538e2c85e766bc?rik=BN9aM0wiUAo64Q&pid=ImgRaw&r=0")
-      no-repeat center center;
-    background-size: cover;
-    width: 600px;
-    height: 400px;
-    border-radius: 15px;
-    position: relative;
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }#minimize-btn, #close-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 10px; /* Ajusta el margen según sea necesario */
-    padding: 5px 10px;
-    background-color: #202020;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  #close-btn {
-    right: 50px; /* Esto moverá el botón Cerrar más hacia la izquierda */
-  }
-  
-  #alert-icon {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    font-size: 40px;
-    color: red;
-    animation: pulse 1s infinite;
-    transform: rotate(30deg);
-    cursor: pointer;
-  }
+#launcher-container {
+  background: url("https://th.bing.com/th/id/R.5de54fb6e7924d9278538e2c85e766bc?rik=BN9aM0wiUAo64Q&pid=ImgRaw&r=0")
+    no-repeat center center;
+  background-size: cover;
+  border-radius: 15px;
+  position: relative;
+  display: flex;
+  justify-content: space-between; /* Para separar el sidebar del contenedor */
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
 
-  @keyframes pulse {
-    0% {
-      transform: scale(1) rotate(30deg);
-    }
-    50% {
-      transform: scale(1.1) rotate(30deg);
-    }
-    100% {
-      transform: scale(1) rotate(30deg);
-    }
-  }
+#minimize-btn, #close-btn {
+  position: absolute;
+  top: 0; justify-content:center;
+align-items:center;
+  right: 0;
+  margin: 10px; /* Ajusta el margen según sea necesario */
+  padding: 5px 10px;
+  background-color: #202020;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
 
-  #event-popup {
-    display: none;
-    position: absolute;
-    top: 80px;
-    left: 275px;
-    width: 295px;
-    background-color: rgba(50, 50, 50, 0.9);
-    color: white;
-    border-radius: 10px;
-    padding: 10px;
-    z-index: 10;
-  }
-  #sidebar {
-    background-color: rgba(50, 50, 50, 0.9); /* Color más sólido */
-    width: 250px;
-    height: 100%;
-    border-radius: 15px;
-    position: block;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-  }
+#close-btn {
+  right: 50px; /* Esto moverá el botón Cerrar más hacia la izquierda */
+}
 
-  #user-info {
-    display: flex; /* Para alinear el nombre y la skin en línea */
-    align-items: center; /* Centrar verticalmente */
-    margin-bottom: 15px;
-    width: 100%; /* Ancho completo */
-  }
+#alert-icon {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 40px;
+  color: red;
+  animation: pulse 1s infinite;
+  transform: rotate(30deg);
+  cursor: pointer;
+}
 
-  #user-info img {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    margin-right: 10px; /* Espacio entre el nombre y la skin */
+@keyframes pulse {
+  0% {
+    transform: scale(1) rotate(30deg);
   }
+  50% {
+    transform: scale(1.1) rotate(30deg);
+  }
+  100% {
+    transform: scale(1) rotate(30deg);
+  }
+}
 
-  button {
-    background-color: rgba(80, 80, 80, 0.9);
-    color: white;
-    margin: 5px 0;
-    width: 200px;
-    height: 40px;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
+#event-popup {
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: 275px;
+  width: 295px;
+  background-color: rgba(50, 50, 50, 0.9);
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 10;
+}
 
-  button:hover {
-    background-color: rgba(100, 100, 100, 0.9);
-  }
+#sidebar {
+  background-color: rgba(50, 50, 50, 0.9); /* Color más sólido */
+  width: 250px;
+  height: 100%;
+  border-radius: 15px;
+  position: fixed;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  z-index: 1000;
+}
 
-  button i {
-    margin-right: 5px;
-    font-size: 18px;
-  }
+#user-info {
+margin-top:10px;
+background:#242424;
+color:white;
+  border-radius:5px;
+  display: flex; /* Para alinear el nombre y la skin en línea */
+  align-items: center; /* Centrar verticalmente */
+  margin-bottom: 15px;
+  width: 100%; /* Ancho completo */
+}
 
-  #content {
-    text-align: center;
-    padding: 20px;
-  }
-  #loading-bar {
-    display: block;
-    width: 90%;
-    height: 10px;
-    background-color: black;
-    margin-top: auto; /* Para alinear la barra en la parte inferior */
-    margin-bottom: 10px; /* Añadir algo de espacio debajo de la barra */
-  }
-  
-  #progress {
-    background-color: green;
-    height: 100%;
-    width: 0%; /* Iniciar con 0% de ancho */
-  }
-  
+#user-info img {
+padding-right:5px;
+  width: 64px;
+  height: 64px;
+  border-radius: 15px;
+  margin-right: 10px; /* Espacio entre el nombre y la skin */
+}
+
+button {
+  background-color: rgba(80, 80, 80, 0.9);
+  color: white;
+  margin: 5px 0;
+  width: 250px;
+  height: 40px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+padding:5px;
+padding-top:10px;
+padding-bottom:10px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: rgba(100, 100, 100, 0.9);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+button i {
+padding-right:25px;
+  font-size: 18px;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  width: calc(100% - 250px); /* Resta el ancho del sidebar */
+}
+
+#title {
+  font-size: 36px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+
+#titles {
+  font-size: 56px;
+  background:gray;
+  padding:10px;
+  border-radius:15px;
+  color: white;
+  margin-top:-20px;
+  margin-bottom: 20px;
+}
+#mission-icon {
+  position:absolute;
+  font-size: 40px;
+  color: red;
+  cursor: pointer;
+  animation: pulse 1s infinite;
+}
+
+#loading-bar {
+  display: block;
+  width: 90%;
+  height: 10px;
+  background-color: black;
+  margin-top: auto; /* Para alinear la barra en la parte inferior */
+  margin-bottom: 10px; /* Añadir algo de espacio debajo de la barra */
+}
+
+#progress {
+  background-color: green;
+  height: 100%;
+  width: 0%; /* Iniciar con 0% de ancho */
+}
+
+#login-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+#login-popup iframe {
+  width: 500px;
+  height: 300px;
+  border-radius: 15px;
+  border: none;
+}
+
+#close-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+
+
+.tree{
+  margin-left:50%;
+  margin-top:50%;
+  background:gray;
+  padding:40px;
+  border-radius:20px;
+}
