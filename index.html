@@ -83,7 +83,7 @@ document.getElementById("minimize-btn").addEventListener("click", () => {
       </div>
     </div>
       <i id="alert-icon" class="bx bx-error-circle mission-icon"></i>
-      <div id="mission-popup" style="display: none;">
+     <div id="mission-popup" style="display: none;">
         <div id="mission-content">
           <h2 id="mission-title"></h2>
           <p id="mission-type"></p>
@@ -92,62 +92,63 @@ document.getElementById("minimize-btn").addEventListener("click", () => {
           <i id="mission-icon"></i>
           <button id="close-mission-popup">Cerrar</button>
         </div>
-      </div>
-      <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        // Referencias a los elementos del popup
-        const missionPopup = document.getElementById('mission-popup');
-        const missionTitle = document.getElementById('mission-title');
-        const missionType = document.getElementById('mission-type');
-        const missionBody = document.getElementById('mission-body');
-        const missionList = document.getElementById('mission-list');
-        const missionIcon = document.getElementById('mission-icon');
-        const closeMissionPopup = document.getElementById('close-mission-popup');
-      
-        // Función para cargar el archivo JSON
-        function loadMissionData() {
-          fetch('event_file.json')
-            .then(response => response.json())
-            .then(data => {
-              // Actualizar el contenido del popup con los datos de la misión
-              missionTitle.textContent = data.titulo;
-              missionType.textContent = data.tipo;
-              missionBody.textContent = data.contenido;
-      
-              // Limpiar la lista antes de añadir nuevas entradas
-              missionList.innerHTML = '';
-      
-              // Convertir la lista en un array y crear elementos <li>
-              const items = data.lista.split(', ');
-              items.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                missionList.appendChild(li);
-              });
-      
-              // Actualizar el icono y el color
-              missionIcon.className = `icon-${data.icon}`;
-              missionIcon.style.color = data.icon_color;
-      
-              // Mostrar el popup
-              missionPopup.style.display = 'block';
-            })
-            .catch(error => {
-              console.error('Error al cargar el archivo JSON:', error);
+      </div> 
+
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Referencias a los elementos del popup
+      const missionPopup = document.getElementById('mission-popup');
+      const missionTitle = document.getElementById('mission-title');
+      const missionType = document.getElementById('mission-type');
+      const missionBody = document.getElementById('mission-body');
+      const missionList = document.getElementById('mission-list');
+      const missionIcon = document.getElementById('mission-icon-dynamic');
+      const closeMissionPopup = document.getElementById('close-mission-popup');
+
+      // Función para cargar el archivo JSON desde GitHub
+      function loadMissionData() {
+        fetch('https://raw.githubusercontent.com/valentinhere1/OverMaster/main/event_file.json')
+          .then(response => response.json())
+          .then(data => {
+            // Actualizar el contenido del popup con los datos de la misión
+            missionTitle.textContent = data.titulo;
+            missionType.textContent = data.tipo;
+            missionBody.textContent = data.contenido;
+
+            // Limpiar la lista antes de añadir nuevas entradas
+            missionList.innerHTML = '';
+
+            // Convertir la lista en un array y crear elementos <li>
+            const items = data.lista.split(', ');
+            items.forEach(item => {
+              const li = document.createElement('li');
+              li.textContent = item;
+              missionList.appendChild(li);
             });
-        }
-      
-        // Evento para cerrar el popup
-        closeMissionPopup.addEventListener('click', function() {
-          missionPopup.style.display = 'none';
-        });
-      
-        // Evento para abrir el popup cuando el ícono de misiones sea clickeado
-        document.getElementById('mission-icon').addEventListener('click', function() {
-          loadMissionData();
-        });
+
+            // Actualizar el icono y el color
+            missionIcon.className = `icon-${data.icon}`;
+            missionIcon.style.color = data.icon_color;
+
+            // Mostrar el popup
+            missionPopup.style.display = 'block';
+          })
+          .catch(error => {
+            console.error('Error al cargar el archivo JSON:', error);
+          });
+      }
+
+      // Evento para cerrar el popup
+      closeMissionPopup.addEventListener('click', function () {
+        missionPopup.style.display = 'none';
       });
-    </script>
+
+      // Evento para abrir el popup cuando el ícono de misiones sea clickeado
+      document.getElementById('mission-icon').addEventListener('click', function () {
+        loadMissionData();
+      });
+    });
+  </script>
 
   <!-- Popup para Seleccionar Versión -->
   <div id="version-popup" class="popup" style="display:none;">
