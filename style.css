@@ -278,6 +278,12 @@ padding-right:25px;
   margin-left:50%;
   margin-top:50%;
   background:gray;
-  padding:40px;
+  padding:5px;
   border-radius:20px;
+}
+.tree p{
+  justify-content: center;
+  align-items: center;
+  color:#ffffff;
+  
 }
