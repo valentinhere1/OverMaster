@@ -1,23 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
+  margin:0;
+  padding:0;
+ font-family: "Oswald", sans-serif;
+  height:100%;
+  width:100%;
   overflow: hidden;  /* Asegúrate de que no haya scroll innecesario */
-  background-color: #202020; /* Cambia el color de fondo si lo deseas */
+  background-color:purple; /* Cambia el color de fondo si lo deseas */
 }
 
 #launcher-container {
-  background: url("https://th.bing.com/th/id/R.5de54fb6e7924d9278538e2c85e766bc?rik=BN9aM0wiUAo64Q&pid=ImgRaw&r=0")
+
+  background: url("https://wallpapers.com/images/hd/pixel-art-background-evf0fmyvu0u03yt2.jpg")
     no-repeat center center;
   background-size: cover;
-  border-radius: 15px;
+  border-radius: 0px 0px 20px 20px;
   position: relative;
   display: flex;
   justify-content: space-between; /* Para separar el sidebar del contenedor */
   align-items: center;
   height: 100%;
   width: 100%;
+}
+.title-bar{
+
+border-radius:20px 20px 0px 0px;
+      height: 30px;
+     width: 100%;
+background:#242424;
+}
+.account-p{
+position:absolute;
+top:125px;
+  background:#242424;
+border-radius:20px;
+height:400px;
+color:white;
+padding:5px;
+
+}
+.account-p .microsoft-log{
+    background:lightblue;
+
+
+}
+.title-bar .title-section{
+padding:1px;
+padding-left:10px;
+
+  display:flex;
 }
    .title-bar .icon {
       width: 24px;
@@ -28,17 +59,19 @@ html, body {
     }
 
     .title-bar .title {
-      font-size: 14px;
+      font-size: 20px;
+color:white;
     }
 
     .title-bar .window-controls {
-      display: flex;
+      display: block;
       align-items: center;
       -webkit-app-region: no-drag; /* Permite hacer clic en botones */
     }
 
     .title-bar .window-controls button {
       background: none;
+
       border: none;
       color: white;
       padding: 5px 10px;
@@ -50,33 +83,8 @@ html, body {
     }
 
 
-#minimize-btn, #close-btn {
-  position: absolute;
-  top: 0; justify-content:center;
-align-items:center;
-  right: 0;
-  margin: 10px; /* Ajusta el margen según sea necesario */
-  padding: 5px 10px;
-  background-color: #202020;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
 
-#close-btn {
-  right: 50px; /* Esto moverá el botón Cerrar más hacia la izquierda */
-}
 
-#alert-icon {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  font-size: 40px;
-  color: red;
-  animation: pulse 1s infinite;
-  transform: rotate(30deg);
-  cursor: pointer;
-}
 
 @keyframes pulse {
   0% {
@@ -102,22 +110,30 @@ align-items:center;
   padding: 10px;
   z-index: 10;
 }
+#mission-content{
+width:510px;
+margin-top:5px;
+background:#242424; 
+padding:5px;
+color:white;
+border-radius:20px;
+}
 
-#sidebar {
+#launcher-container #sidebar {
   background-color: rgba(50, 50, 50, 0.9); /* Color más sólido */
   width: 250px;
   height: 100%;
-  border-radius: 15px;
+  border-radius: 0px 10px 10px 0px;
   position: fixed;
   left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
-  z-index: 1000;
+  padding: 0px 10px 0px 10px;
+
 }
 
-#user-info {
+ #sidebar #user-info {
 margin-top:10px;
 background:#242424;
 color:white;
@@ -128,7 +144,7 @@ color:white;
   width: 100%; /* Ancho completo */
 }
 
-#user-info img {
+ #sidebar #user-info img {
 padding-right:5px;
   width: 64px;
   height: 64px;
@@ -138,7 +154,8 @@ padding-right:5px;
 
 button {
   background-color: rgba(80, 80, 80, 0.9);
-  color: white;
+  color: white; 
+font-family: "Oswald", sans-serif;
   margin: 5px 0;
   width: 250px;
   height: 40px;
@@ -163,15 +180,29 @@ padding-right:25px;
   font-size: 18px;
 }
 
-#content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  width: calc(100% - 250px); /* Resta el ancho del sidebar */
+#launcher-container #content {
+  display: relative;
+margin-left:280px;
+ height:500px;
+  justify-content: left;
+  align-items: left;
+  text-align: left;
+  padding: 5px;
+  width: calc(750px - 270px); /* Resta el ancho del sidebar */
 }
+ #content .titles {
+  font-size: 20px;
+      background: url('assets/images/OverMaster.webp') no-repeat center center rgba(50, 50, 50, 0.9);
+width:515px;  
+
+height:100px;
+align-items: center;
+  text-align:center;
+  border-radius:5px;
+  color: white;
+margin-top:-80px;
+}
+
 
 #title {
   font-size: 36px;
@@ -180,25 +211,21 @@ padding-right:25px;
 }
 
 
-#titles {
-  font-size: 56px;
-  background:gray;
-  padding:10px;
-  border-radius:15px;
-  color: white;
-  margin-top:-20px;
-  margin-bottom: 20px;
-}
+
 #mission-icon {
   position:absolute;
   font-size: 40px;
   color: red;
-  cursor: pointer;
   animation: pulse 1s infinite;
+  transform: rotate(30deg);
+  cursor: pointer;
+ bottom: 0px;
+  right: 0px;
 }
 
 #loading-bar {
-  display: block;
+  display: none;
+border-radius:20px;
   width: 90%;
   height: 10px;
   background-color: black;
@@ -212,17 +239,18 @@ padding-right:25px;
   width: 0%; /* Iniciar con 0% de ancho */
 }
 
+/* Login Popup */
 #login-popup {
-  display: none;
-  position: fixed;
+ position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1001;
 }
 
 #login-popup iframe {
@@ -242,24 +270,23 @@ padding-right:25px;
   padding: 5px 10px;
   cursor: pointer;
 }
+
     /* Estilos para los popups */
     .popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
+  position: absolute;
+  margin-left:258px;
+ top:50%;
   transform: translate(-50%, -50%);
-  width: 400px;
-  background-color: #333;
+  width: 476px;
+      background-color:#242424;
   color: white;
   padding: 20px;
   border-radius: 10px;
   z-index: 1001;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
-
-    .popup-content {
-      background-color: #fff;
+.popup-content {
+      background-color: #242424;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);

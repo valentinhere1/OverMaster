@@ -42,10 +42,10 @@ document.getElementById("minimize-btn").addEventListener("click", () => {
   <div class="title-bar">
     <div class="title-section">
       <div class="icon"></div>
-      <span class="title">OverMaster launcher</span>
+      <span class="title">OverMasterher</span>
     </div>
     <div class="window-controls">
-      <button id="close-btn">-</button>
+      <button id="minimize-btn">-</button>
       <button id="close-btn">X</button>
 
     </div>
@@ -53,185 +53,60 @@ document.getElementById("minimize-btn").addEventListener("click", () => {
   <div id="launcher-container">
  
     <div id="sidebar">
+
+              <!-- ================================== -->
+              <!-- ================================== -->
+              <!-- ===========  USUARIO    ========== -->
+              <!-- ================================== -->
+              <!-- ================================== -->
+
       <div id="user-info">
-        <img id="skin-image" src="https://mineskin.eu/armor/bust/stive/100.png
+        <img id="skin-image" src="https://mineskin.eu/armor/bust/stv/100.png
 " alt="Skin"/>
 
-        <h3 style="color: white">no conectado</h3>
+        <h3 style="color: white">Cargando....</h3>
       </div>
-      <button id="launch-button"><i class="bx bx-play-circle"></i> Lanzar Juego</button>
+
+
+              <!-- ================================== -->
+              <!-- ================================== -->
+              <!-- ===========  botones   ========== -->
+              <!-- ================================== -->
+              <!-- ================================== -->
+      <button id="launch-button" style="background:green;width:230px;height:60px;"><i class="bx bx-play"></i>
+Lanzar Juego
+ </n>Version:${version}
+
+</button>
       <button id="versions-button"><i class="bx bx-layer"></i> Versiones</button>
-      <button id="settings-button"><i class="bx bx-cog"></i> Configuración</button>
+ <button id="button"><i class="bx bx-server"></i>Clientes - MC</button>
+      <button id="settings-button" style="position:absolute;bottom:60px;"><i class="bx bx-cog"></i> Configuración</button>
+
+
+              <!-- ================================== -->
+              <!-- ================================== -->
+              <!-- ======== barra de progreso ======= -->
+              <!-- ================================== -->
+              <!-- ================================== -->
       <div id="loading-bar">
         <div id="progress"></div>
       </div>
+
+
     </div>
 
+              <!-- ================================== -->
+              <!-- ================================== -->
+              <!-- ========== V-contenido  ========== -->
+              <!-- ================================== -->
+              <!-- ================================== -->
     <div id="content">
-      <div class="titles">OverMaster - Launcher</div>
-
-
-              <!-- ================================== -->
-              <!-- ================================== -->
-              <!-- ===========  CUENTAS    ========== -->
-              <!-- ================================== -->
-              <!-- ================================== -->
-
-              <div id="account-popup">
-                <h1>Iniciar sesión</h1>
-                <p>Proporciona un nombre de usuario o inicia sesión con tu cuenta de Microsoft.</p>
-            
-                <!-- Campo de nombre de usuario no premium -->
-                <label for="nickname">Nombre de usuario (No Premium):</label>
-                <input type="text" id="nickname" placeholder="Ingresa un nombre no premium">
-            
-                <!-- Botón para iniciar sesión con nombre no premium -->
-                <button id="login-button">Ingresar al launcher</button>
-            
-                <!-- Botón para iniciar sesión con Microsoft -->
-                <button id="microsoft-login">Iniciar sesión con Microsoft</button>
-            
-                <p>Puedes cambiar de cuenta dentro del launcher, en el apartado de configuración.</p>
-            </div>
-            <script>
-              document.addEventListener("DOMContentLoaded", function() {
-                // Verificar si ya hay un usuario guardado en localStorage
-                const storedUsername = localStorage.getItem('overmaster_username');
-                const skinImage = document.getElementById('skin-image');
-                const userName = document.getElementById('user-name');
-                const loginPopup = document.getElementById('login-popup');
-            
-                // Si no hay un usuario guardado, mostrar el popup de inicio de sesión
-                if (!storedUsername) {
-                  loginPopup.style.display = 'flex'; // Mostrar el popup
-                } else {
-                  // Mostrar la información del usuario guardado
-                  userName.textContent = storedUsername;
-                  skinImage.src = `https://mineskin.eu/armor/bust/${storedUsername}/100.png`;
-                }
-            
-                // Evento del botón para ingresar con nombre no premium
-                document.getElementById("login-button").addEventListener("click", () => {
-                  const nickname = document.getElementById("nickname").value.trim();
-            
-                  if (nickname) {
-                    // Guardar el nombre de usuario en localStorage
-                    localStorage.setItem('overmaster_username', nickname);
-            
-                    // Actualizar la información de usuario en el sidebar
-                    userName.textContent = nickname;
-                    skinImage.src = `https://mineskin.eu/armor/bust/${nickname}/100.png`;
-            
-                    // Ocultar el popup de inicio de sesión
-                    loginPopup.style.display = 'none';
-            
-                    // Cargar o redirigir al launcher
-                    cargarLauncher(nickname);
-                  } else {
-                    alert("Por favor, ingresa un nombre de usuario.");
-                  }
-                });
-            
-                // Lógica para iniciar sesión con Microsoft (esto sería más complicado y depende de la API de Microsoft)
-                document.getElementById("microsoft-login").addEventListener("click", () => {
-                  alert("Iniciar sesión con Microsoft - No implementado.");
-                });
-              });
-            
-        
-                document.getElementById('launcher-content').style.display = 'block';
-                document.getElementById('welcome-message').textContent = `Bienvenido, ${username}`;
-                // Ocultar otros elementos si es necesario
-                document.getElementById('login-popup').style.display = 'none';
-                
-              
-            </script>
-            
-
-
-
-
-              <!-- ================================== -->
-              <!-- ================================== -->
-              <!-- ===========  MISIONES   ========== -->
-              <!-- ================================== -->
-              <!-- ================================== -->
-              <i id="mission-icon" class="bx bx-error-circle mission-icon"></i> <!-- Cambiado de alert-icon a mission-icon -->
-              <div id="mission-popup" style="display: none;">
-                <div id="mission-content">
-                  <h2 id="mission-title"></h2>
-                  <p id="mission-type"></p>
-                  <p id="mission-body"></p>
-                  <ul id="mission-list"></ul>
-                  <i id="mission-icon-dynamic"></i> <!-- Asegúrate que el id sea el correcto -->
-                  <button id="close-mission-popup">Cerrar</button>
-                </div>
-              </div>
-              
-              <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                  // Referencias a los elementos del popup
-                  const missionPopup = document.getElementById('mission-popup');
-                  const missionTitle = document.getElementById('mission-title');
-                  const missionType = document.getElementById('mission-type');
-                  const missionBody = document.getElementById('mission-body');
-                  const missionList = document.getElementById('mission-list');
-                  const missionIcon = document.getElementById('mission-icon-dynamic'); // Asegúrate que apunte al ícono correcto
-                  const closeMissionPopup = document.getElementById('close-mission-popup');
-              
-                  // Función para cargar el archivo JSON desde GitHub
-                  function loadMissionData() {
-                    fetch('https://raw.githubusercontent.com/valentinhere1/OverMaster/main/event_file.json')
-                      .then(response => response.json())
-                      .then(data => {
-                        // Actualizar el contenido del popup con los datos de la misión
-                        missionTitle.textContent = data.titulo;
-                        missionType.textContent = data.tipo;
-                        missionBody.textContent = data.contenido;
-              
-                        // Limpiar la lista antes de añadir nuevas entradas
-                        missionList.innerHTML = '';
-              
-                        // Convertir la lista en un array y crear elementos <li>
-                        const items = data.lista.split(', ');
-                        items.forEach(item => {
-                          const li = document.createElement('li');
-                          li.textContent = item;
-                          missionList.appendChild(li);
-                        });
-              
-                        // Actualizar el icono y el color
-                        missionIcon.className = `icon-${data.icon}`;
-                        missionIcon.style.color = data.icon_color;
-              
-                        // Mostrar el popup
-                        missionPopup.style.display = 'block';
-                      })
-                      .catch(error => {
-                        console.error('Error al cargar el archivo JSON:', error);
-                      });
-                  }
-              
-                  // Evento para cerrar el popup
-                  closeMissionPopup.addEventListener('click', function () {
-                    missionPopup.style.display = 'none';
-                  });
-              
-                  // Evento para abrir el popup cuando el ícono de misiones sea clickeado
-                  document.getElementById('mission-icon').addEventListener('click', function () { // Cambiado a mission-icon
-                    loadMissionData();
-                  });
-                });
-              </script>
-              
-
-
-
               <!-- ================================== -->
               <!-- ================================== -->
               <!-- ===========  Versione   ========== -->
               <!-- ================================== -->
               <!-- ================================== -->
+
   <div id="version-popup" class="popup" style="display:none;">
     <div class="popup-content">
       <h1>Seleccionar Versión</h1>
@@ -313,6 +188,167 @@ document.getElementById('settings-button').addEventListener('click', () => {
 });
 
   </script>
+
+
+
+      <div class="titles"></div>
+
+
+              <!-- ================================== -->
+              <!-- ================================== -->
+              <!-- ===========  CUENTAS    ========== -->
+              <!-- ================================== -->
+              <!-- ================================== -->
+
+              <div id="account-popup" class="account-p">
+                <h1>Iniciar sesión</h1>
+                <p>Proporciona un nombre de usuario o inicia sesión con tu cuenta de Microsoft.</p>
+            
+                <!-- Campo de nombre de usuario no premium -->
+                <label for="nickname">Nombre de usuario (No Premium):</label>
+                <input type="text" id="nickname" placeholder="Ingresa un nombre no premium">
+            
+                <!-- Botón para iniciar sesión con nombre no premium -->
+                <button id="login-button">Ingresar al launcher</button>
+            
+                <!-- Botón para iniciar sesión con Microsoft -->
+                <button id="microsoft-login" class="microsoft-log">Iniciar sesión con Microsoft</button>
+            
+                <p>Puedes cambiar de cuenta dentro del launcher, en el apartado de configuración.</p>
+            </div>
+            <script>
+              document.addEventListener("DOMContentLoaded", function() {
+                // Verificar si ya hay un usuario guardado en localStorage
+                const storedUsername = localStorage.getItem('overmaster_username');
+                const skinImage = document.getElementById('skin-image');
+                const userName = document.getElementById('user-name');
+                const loginPopup = document.getElementById('login-popup');
+            
+                // Si no hay un usuario guardado, mostrar el popup de inicio de sesión
+                if (!storedUsername) {
+                  loginPopup.style.display = 'flex'; // Mostrar el popup
+                } else {
+                  // Mostrar la información del usuario guardado
+                  userName.textContent = storedUsername;
+                  skinImage.src = `https://mineskin.eu/armor/bust/${storedUsername}/100.png`;
+                }
+            
+                // Evento del botón para ingresar con nombre no premium
+                document.getElementById("login-button").addEventListener("click", () => {
+                  const nickname = document.getElementById("nickname").value.trim();
+            
+                  if (nickname) {
+                    // Guardar el nombre de usuario en localStorage
+                    localStorage.setItem('overmaster_username', nickname);
+            
+                    // Actualizar la información de usuario en el sidebar
+                    userName.textContent = nickname;
+                    skinImage.src = `https://mineskin.eu/armor/bust/${nickname}/100.png`;
+            
+                    // Ocultar el popup de inicio de sesión
+                    loginPopup.style.display = 'none';
+            
+                    // Cargar o redirigir al launcher
+                    cargarLauncher(nickname);
+                  } else {
+                    alert("Por favor, ingresa un nombre de usuario.");
+                  }
+                });
+            
+                // Lógica para iniciar sesión con Microsoft (esto sería más complicado y depende de la API de Microsoft)
+                document.getElementById("microsoft-login").addEventListener("click", () => {
+                  alert("Iniciar sesión con Microsoft - No implementado.");
+                });
+              });
+            
+        
+                document.getElementById('launcher-content').style.display = 'block';
+                document.getElementById('welcome-message').textContent = `Bienvenido, ${username}`;
+                // Ocultar otros elementos si es necesario
+                document.getElementById('login-popup').style.display = 'none';
+                
+              
+            </script>
+  
+
+
+
+
+              <!-- ================================== -->
+              <!-- ================================== -->
+              <!-- ===========  MISIONES   ========== -->
+              <!-- ================================== -->
+              <!-- ================================== -->
+              <i id="mission-icon" class="bx bx-error-circle mission-icon"></i> <!-- Cambiado de alert-icon a mission-icon -->
+              <div id="mission-popup" style="display: none;">
+                <div id="mission-content">
+                  <h2 id="mission-title"></h2>
+                  <p id="mission-type"></p>
+                  <p id="mission-body"></p>
+                  <ul id="mission-list"></ul>
+                  <i id="mission-icon-dynamic"></i> <!-- Asegúrate que el id sea el correcto -->
+                  <button id="close-mission-popup">Cerrar</button>
+                </div>
+              </div>
+              <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                  // Referencias a los elementos del popup
+                  const missionPopup = document.getElementById('mission-popup');
+                  const missionTitle = document.getElementById('mission-title');
+                  const missionType = document.getElementById('mission-type');
+                  const missionBody = document.getElementById('mission-body');
+                  const missionList = document.getElementById('mission-list');
+                  const missionIcon = document.getElementById('mission-icon-dynamic'); // Asegúrate que apunte al ícono correcto
+                  const closeMissionPopup = document.getElementById('close-mission-popup');
+              
+                  // Función para cargar el archivo JSON desde GitHub
+                  function loadMissionData() {
+                    fetch('https://raw.githubusercontent.com/valentinhere1/OverMaster/main/event_file.json')
+                      .then(response => response.json())
+                      .then(data => {
+                        // Actualizar el contenido del popup con los datos de la misión
+                        missionTitle.textContent = data.titulo;
+                        missionType.textContent = data.tipo;
+                        missionBody.textContent = data.contenido;
+              
+                        // Limpiar la lista antes de añadir nuevas entradas
+                        missionList.innerHTML = '';
+              
+                        // Convertir la lista en un array y crear elementos <li>
+                        const items = data.lista.split(', ');
+                        items.forEach(item => {
+                          const li = document.createElement('li');
+                          li.textContent = item;
+                          missionList.appendChild(li);
+                        });
+              
+                        // Actualizar el icono y el color
+                        missionIcon.className = `icon-${data.icon}`;
+                        missionIcon.style.color = data.icon_color;
+              
+                        // Mostrar el popup
+                        missionPopup.style.display = 'block';
+                      })
+                      .catch(error => {
+                        console.error('Error al cargar el archivo JSON:', error);
+                      });
+                  }
+              
+                  // Evento para cerrar el popup
+                  closeMissionPopup.addEventListener('click', function () {
+                    missionPopup.style.display = 'none';
+                  });
+              
+                  // Evento para abrir el popup cuando el ícono de misiones sea clickeado
+                  document.getElementById('mission-icon').addEventListener('click', function () { // Cambiado a mission-icon
+                    loadMissionData();
+                  });
+                });
+              </script>
+              
+
+
+
 
  </div></div>
 </body>

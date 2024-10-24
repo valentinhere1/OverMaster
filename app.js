@@ -13,8 +13,8 @@ if (fs.existsSync(ffmpegPath)) {
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 850,
+    height: 650,
     resizable: false,  // Deshabilitar el redimensionamiento
     frame: false,  // Eliminar el borde de la ventana
     transparent: true,  // Fondo transparente
