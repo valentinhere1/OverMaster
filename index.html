@@ -6,6 +6,14 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
   <script>
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('api', {
+  getInstalledVersions: () => ipcRenderer.invoke('get-installed-versions'),
+  installMinecraft: (version) => ipcRenderer.invoke('install-minecraft', version),
+  installForge: (version) => ipcRenderer.invoke('install-forge', version),
+  launchMinecraft: (data) => ipcRenderer.invoke('launch-minecraft', data),
+});
 
 const { remote } = require('electron');
 
@@ -60,12 +68,10 @@ document.getElementById("minimize-btn").addEventListener("click", () => {
               <!-- ================================== -->
               <!-- ================================== -->
 
-      <div id="user-info">
-        <img id="skin-image" src="https://mineskin.eu/armor/bust/stv/100.png
-" alt="Skin"/>
-
-        <h3 style="color: white">Cargando....</h3>
-      </div>
+              <div id="user-info">
+                <img id="skin-image" src="https://mineskin.eu/armor/bust/stv/100.png" alt="Skin"/>
+                <h3 style="color: white" id="user-name">Cargando...</h3>
+              </div>
 
 
               <!-- ================================== -->
@@ -73,15 +79,14 @@ document.getElementById("minimize-btn").addEventListener("click", () => {
               <!-- ===========  botones   ========== -->
               <!-- ================================== -->
               <!-- ================================== -->
-      <button id="launch-button" style="background:green;width:230px;height:60px;"><i class="bx bx-play"></i>
-Lanzar Juego
- </n>Version:${version}
-
-</button>
-      <button id="versions-button"><i class="bx bx-layer"></i> Versiones</button>
+              <button id="launch-button" style="background:green;width:230px;height:60px;" disabled>
+                <i class="bx bx-play"></i> Lanzar Juego
+              </button>
+              <button id="versions-button"><i class="bx bx-layer"></i> Versiones</button>
  <button id="button"><i class="bx bx-server"></i>Clientes - MC</button>
-      <button id="settings-button" style="position:absolute;bottom:60px;"><i class="bx bx-cog"></i> Configuración</button>
-
+ <button id="settings-button" style="position:absolute;bottom:60px;">
+  <i class="bx bx-cog"></i> Configuración
+</button>
 
               <!-- ================================== -->
               <!-- ================================== -->
@@ -107,16 +112,16 @@ Lanzar Juego
               <!-- ================================== -->
               <!-- ================================== -->
 
-  <div id="version-popup" class="popup" style="display:none;">
-    <div class="popup-content">
-      <h1>Seleccionar Versión</h1>
-      <label><input type="radio" name="version" value="1.20.4 Fabric" /> 1.20.4 Fabric</label><br />
-      <label><input type="radio" name="version" value="1.20.4 Forge" /> 1.20.4 Forge</label><br />
-      <label><input type="radio" name="version" value="1.20.4 Vanilla" /> 1.20.4 Vanilla</label><br />
-      <button onclick="saveVersion()">Guardar y Cerrar</button>
-      <button onclick="closePopup('version-popup')">Volver</button>
-    </div>
-  </div>
+              <div id="version-popup" class="popup" style="display:none;">
+                <div class="popup-content">
+                  <h1>Seleccionar Versión</h1>
+                  <label><input type="radio" name="version" value="1.20.4 Fabric" /> 1.20.4 Fabric</label><br />
+                  <label><input type="radio" name="version" value="1.20.4 Forge" /> 1.20.4 Forge</label><br />
+                  <label><input type="radio" name="version" value="1.20.4 Vanilla" /> 1.20.4 Vanilla</label><br />
+                  <button onclick="saveVersion()">Guardar y Cerrar</button>
+                  <button onclick="closePopup('version-popup')">Volver</button>
+                </div>
+              </div>
   
 
               <!-- ================================== -->
@@ -124,14 +129,14 @@ Lanzar Juego
               <!-- ======= Configuracions  ========== -->
               <!-- ================================== -->
               <!-- ================================== -->
-  <div id="settings-popup" class="popup" style="display:none;">
-    <div class="popup-content">
-      <h1>Configuración</h1>
-      <button onclick="changeAccount()">Cambiar de Cuenta</button>
-      <button onclick="changeLanguage()">Cambiar Idioma</button>
-      <button onclick="closePopup('settings-popup')">Volver</button>
-    </div>
-  </div>
+              <div id="settings-popup" class="popup" style="display:none;">
+                <div class="popup-content">
+                  <h1>Configuración</h1>
+                  <button onclick="changeAccount()">Cambiar de Cuenta</button>
+                  <button onclick="changeLanguage()">Cambiar Idioma</button>
+                  <button onclick="closePopup('settings-popup')">Volver</button>
+                </div>
+              </div>
 
   <script>
   window.onload = function() {
@@ -200,22 +205,13 @@ document.getElementById('settings-button').addEventListener('click', () => {
               <!-- ================================== -->
               <!-- ================================== -->
 
-              <div id="account-popup" class="account-p">
+              <div id="account-popup" class="popup" style="display:none;">
                 <h1>Iniciar sesión</h1>
-                <p>Proporciona un nombre de usuario o inicia sesión con tu cuenta de Microsoft.</p>
-            
-                <!-- Campo de nombre de usuario no premium -->
-                <label for="nickname">Nombre de usuario (No Premium):</label>
-                <input type="text" id="nickname" placeholder="Ingresa un nombre no premium">
-            
-                <!-- Botón para iniciar sesión con nombre no premium -->
+                <label for="nickname">Nombre de usuario:</label>
+                <input type="text" id="nickname" placeholder="Ingresa un nombre">
                 <button id="login-button">Ingresar al launcher</button>
+              </div>
             
-                <!-- Botón para iniciar sesión con Microsoft -->
-                <button id="microsoft-login" class="microsoft-log">Iniciar sesión con Microsoft</button>
-            
-                <p>Puedes cambiar de cuenta dentro del launcher, en el apartado de configuración.</p>
-            </div>
             <script>
               document.addEventListener("DOMContentLoaded", function() {
                 // Verificar si ya hay un usuario guardado en localStorage

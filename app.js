@@ -2,6 +2,9 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
+// Directorio de Minecraft
+const userWindow = os.userInfo().username;
+const minecraftDirectori = `C:/Users/${userWindow}/AppData/Roaming/.minecraft`;
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -61,6 +64,55 @@ function createWindow() {
 
 
 }
+
+
+  // Listener para versiones instaladas
+  ipcMain.handle('get-installed-versions', async () => {
+    const versions = minecraftLauncherLib.utils.get_installed_versions(minecraftDirectori);
+    return versions.map(version => version.id);
+  });
+
+  // Listener para instalar una versión de Minecraft
+  ipcMain.handle('install-minecraft', async (event, version) => {
+    await minecraftLauncherLib.install.install_minecraft_version(version, minecraftDirectori);
+    return `Se ha instalado la versión ${version}`;
+  });
+
+  // Listener para instalar Forge
+  ipcMain.handle('install-forge', async (event, version) => {
+    const forge = minecraftLauncherLib.forge.find_forge_version(version);
+    await minecraftLauncherLib.forge.install_forge_version(forge, minecraftDirectori);
+    return 'Forge instalado';
+  });
+
+  // Listener para ejecutar Minecraft
+  ipcMain.handle('launch-minecraft', (event, { mineUser, version, ram }) => {
+    const options = {
+      username: mineUser,
+      uuid: '',
+      token: '',
+      jvmArguments: [`-Xmx${ram}G`, `-Xms${ram}G`],
+      launcherVersion: "0.0.2"
+    };
+
+    const minecraftCommand = minecraftLauncherLib.command.get_minecraft_command(version, minecraftDirectori, options);
+    const subprocess = require('child_process').spawn(minecraftCommand[0], minecraftCommand.slice(1));
+    subprocess.stdout.on('data', (data) => console.log(`stdout: ${data}`));
+    subprocess.stderr.on('data', (data) => console.error(`stderr: ${data}`));
+    return 'Minecraft ejecutándose';
+  });
+
+
+// preload.js
+const { contextBridge, ipcRenderer } = require('electron');
+contextBridge.exposeInMainWorld('electronAPI', {
+    closeApp: () => ipcRenderer.send('close-app'),
+    minimizeApp: () => ipcRenderer.send('minimize-app')
+});
+
+// renderer.js
+document.getElementById("close-btn").addEventListener("click", () => window.electronAPI.closeApp());
+document.getElementById("minimize-btn").addEventListener("click", () => window.electronAPI.minimizeApp());
 
 // Verifica si hay actualizaciones en el repositorio de GitHub
 async function checkForLauncherUpdates() {

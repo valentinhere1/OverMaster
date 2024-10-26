@@ -219,7 +219,7 @@ margin-top:-80px;
   animation: pulse 1s infinite;
   transform: rotate(30deg);
   cursor: pointer;
- bottom: 0px;
+ bottom: 15px;
   right: 0px;
 }
 
