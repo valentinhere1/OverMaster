@@ -1,7 +1,9 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
+
 const fs = require('fs');
+const os = require('os');
 // Directorio de Minecraft
 const userWindow = os.userInfo().username;
 const minecraftDirectori = `C:/Users/${userWindow}/AppData/Roaming/.minecraft`;
@@ -103,16 +105,6 @@ function createWindow() {
   });
 
 
-// preload.js
-const { contextBridge, ipcRenderer } = require('electron');
-contextBridge.exposeInMainWorld('electronAPI', {
-    closeApp: () => ipcRenderer.send('close-app'),
-    minimizeApp: () => ipcRenderer.send('minimize-app')
-});
-
-// renderer.js
-document.getElementById("close-btn").addEventListener("click", () => window.electronAPI.closeApp());
-document.getElementById("minimize-btn").addEventListener("click", () => window.electronAPI.minimizeApp());
 
 // Verifica si hay actualizaciones en el repositorio de GitHub
 async function checkForLauncherUpdates() {
