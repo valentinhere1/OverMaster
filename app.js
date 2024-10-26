@@ -3,14 +3,6 @@ const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
 
-// Verificar la existencia de ffmpeg.dll
-const ffmpegPath = path.join(__dirname, 'ffmpeg.dll');
-if (fs.existsSync(ffmpegPath)) {
-  console.log('ffmpeg.dll found at', ffmpegPath);
-} else {
-  console.error('ffmpeg.dll is missing!');
-}
-
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 850,
@@ -35,19 +27,21 @@ function createWindow() {
 
   // Si hay una actualización disponible
   autoUpdater.on('update-available', () => {
+    console.log('Actualización disponible, descargando...');
     mainWindow.loadFile('update.html');  // Pantalla de "Descargando actualización..."
   });
 
   // Cuando la actualización ha sido descargada
   autoUpdater.on('update-downloaded', () => {
+    console.log('Actualización descargada, instalando...');
     autoUpdater.quitAndInstall();  // Instalar y reiniciar
   });
 
   // Si no hay actualizaciones
   autoUpdater.on('update-not-available', () => {
+    console.log('No hay actualizaciones disponibles.');
     mainWindow.loadFile('index.html');  // Ejecutar el launcher
-    // También actualizamos el archivo de eventos al iniciar
-    updateEventFile();
+    updateEventFile();  // También actualizamos el archivo de eventos al iniciar
   });
 
   // Si hay algún error en la búsqueda de actualizaciones
@@ -65,20 +59,7 @@ function createWindow() {
     mainWindow.close();
   });
 
-  // Abrir el popup de selección de versión
-  ipcMain.on('open-version-popup', () => {
-    const popup = new BrowserWindow({
-      width: 400,
-      height: 300,
-      modal: true,
-      parent: mainWindow,
-      webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false
-      }
-    });
-    popup.loadFile('poppup/versions.html');  // Corregido: 'popup' a 'poppup'
-  });
+
 }
 
 // Verifica si hay actualizaciones en el repositorio de GitHub
@@ -94,7 +75,7 @@ async function checkForLauncherUpdates() {
       const lastLauncherVersion = localStorage.getItem('lastLauncherVersion');
       
       if (lastLauncherVersion !== latestCommitHash) {
-        alert("Hay una nueva versión del launcher disponible. Actualiza para obtener las últimas correcciones.");
+        console.log("Hay una nueva versión del launcher disponible.");
         localStorage.setItem('lastLauncherVersion', latestCommitHash);
       }
     } else {
@@ -118,7 +99,6 @@ async function updateEventFile() {
       // Guardar los datos del event_file en localStorage
       localStorage.setItem('eventData', JSON.stringify(eventData));
 
-      alert("Archivo de eventos actualizado.");
     } else {
       console.error("Error al descargar el event_file:", response.statusText);
     }
