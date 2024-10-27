@@ -8,7 +8,6 @@ html, body {
   height:100%;
   width:100%;
   overflow: hidden;  /* Asegúrate de que no haya scroll innecesario */
-  background-color:purple; /* Cambia el color de fondo si lo deseas */
 }
 
 #launcher-container {
@@ -16,7 +15,7 @@ html, body {
   background: url("https://wallpapers.com/images/hd/pixel-art-background-evf0fmyvu0u03yt2.jpg")
     no-repeat center center;
   background-size: cover;
-  border-radius: 0px 0px 20px 20px;
+  border-radius: 0px 0px 15px 15px;
   position: relative;
   display: flex;
   justify-content: space-between; /* Para separar el sidebar del contenedor */
@@ -29,6 +28,7 @@ html, body {
       height: 30px;
      width: 100%;
 background:#242424;
+border-radius:15px 15px 0px 0px;
 }
 .account-p{
 position:absolute;
@@ -47,7 +47,7 @@ padding:5px;
 }
 .title-bar .title-section{
 padding:1px;
-padding-left:10px;
+padding-left:25px;
 
   display:flex;
 }
@@ -130,7 +130,7 @@ border-radius:20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px 10px 0px 10px;
+  padding: 0px 0px 0px 15px;
 
 }
 
@@ -302,16 +302,17 @@ border-radius:20px;
 }
 
 
-.tree{
-  margin-left:50%;
-  margin-top:50%;
-  background:gray;
-  padding:5px;
-  border-radius:20px;
+
+.tree {
+  background: gray;
+  padding: 20px 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Sombra para darle profundidad */
+  text-align: center; /* Centra el texto dentro del contenedor */
 }
-.tree p{
-  justify-content: center;
-  align-items: center;
-  color:#ffffff;
-  
+
+.tree p {
+  color: #ffffff;
+  font-size: 1.2em;
+  margin: 0;
 }
