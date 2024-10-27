@@ -4,17 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css" />
-
+  <title>OverMaster Launcher - Instalando</title>
 </head>
 <body>
   <div class="title-bar">
     <div class="title-section">
       <div class="icon"></div>
-      <span class="title">OverMaster launcher - revisando la version</span>
+      <span class="title">OverMaster launcher - Progreso de Instalación</span>
     </div>
   </div>
+
   <div id="launcher-container">
-  <h2 class="tree"><p>Buscando actualizaciones...</p></h2>
+    <!-- Contenedor de mensaje de instalación -->
+    <div class="install-status">
+      <p id="status-message">Preparando la instalación...</p>
+      <div class="progress-bar">
+        <div id="progress-bar-fill"></div>
+      </div>
+      <p id="status-details">Iniciando...</p>
+    </div>
   </div>
+
+  <!-- Script para manejar el progreso de instalación -->
+  <script>
+    const statusMessage = document.getElementById("status-message");
+    const statusDetails = document.getElementById("status-details");
+    const progressBarFill = document.getElementById("progress-bar-fill");
+
+    function updateInstallationStatus(message, details, progress) {
+      statusMessage.textContent = message;
+      statusDetails.textContent = details;
+      progressBarFill.style.width = progress + '%';
+    }
+
+    // Ejemplo de secuencia de instalación
+    function startInstallationProcess() {
+      updateInstallationStatus("Buscando actualizaciones...", "Verificando versiones disponibles...", 10);
+
+      setTimeout(() => {
+        updateInstallationStatus("Se encontraron actualizaciones.", "Preparando archivos para descarga...", 30);
+      }, 2000);
+
+      setTimeout(() => {
+        updateInstallationStatus("Descargando archivos...", "Descargando las últimas versiones...", 60);
+      }, 4000);
+
+      setTimeout(() => {
+        updateInstallationStatus("Instalando...", "Aplicando actualizaciones...", 90);
+      }, 6000);
+
+      setTimeout(() => {
+        updateInstallationStatus("Instalación completa", "reiniciando", 100);
+        // Aquí podrías iniciar la interfaz principal, por ejemplo:
+        // window.location.href = 'index.html';
+      }, 8000);
+    }
+
+    // Iniciar la secuencia de instalación al cargar la página
+    startInstallationProcess();
+  </script>
 </body>
 </html>
