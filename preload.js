@@ -8,3 +8,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
   installForge: (version) => ipcRenderer.invoke('install-forge', version),
   launchMinecraft: (data) => ipcRenderer.invoke('launch-minecraft', data),
 });
+
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  onUpdateStatus: (callback) => ipcRenderer.on('update-status', (event, status) => callback(status)),
+  onLaunchApp: (callback) => ipcRenderer.on('launch-app', callback)
+});
+
