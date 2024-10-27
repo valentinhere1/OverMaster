@@ -27,25 +27,39 @@ function createWindow() {
       nodeIntegration: false,
     },
   });
-
   mainWindow.loadFile('loading.html');
 
+  // Comienza a buscar actualizaciones una vez que la ventana esté lista
   mainWindow.once('ready-to-show', () => {
     autoUpdater.checkForUpdates();
   });
 
+  // Estado de actualización disponible
   autoUpdater.on('update-available', () => {
-    mainWindow.loadFile('update.html');
+    mainWindow.webContents.send('update-status', { status: 'available', message: 'Se encontraron actualizaciones...' });
   });
 
+  // Estado de actualización descargando
+  autoUpdater.on('download-progress', (progress) => {
+    mainWindow.webContents.send('update-status', {
+      status: 'downloading',
+      message: `Descargando... ${Math.floor(progress.percent)}%`
+    });
+  });
+
+  // Estado de actualización descargada y lista para instalar
   autoUpdater.on('update-downloaded', () => {
+    mainWindow.webContents.send('update-status', { status: 'downloaded', message: 'Actualización descargada. Instalando...' });
     autoUpdater.quitAndInstall();
   });
 
+  // No se encontraron actualizaciones
   autoUpdater.on('update-not-available', () => {
-    mainWindow.loadFile('index.html');
-    updateEventFile();
+    mainWindow.webContents.send('update-status', { status: 'no-update', message: 'No se encontraron actualizaciones. Lanzando launcher...' });
+    setTimeout(() => mainWindow.webContents.send('launch-app'), 2000); // Espera antes de lanzar la app
   });
+}
+
 
   ipcMain.on('minimize-window', () => mainWindow.minimize());
   ipcMain.on('close-window', () => mainWindow.close());
