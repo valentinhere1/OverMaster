@@ -1,110 +1,104 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
 html, body {
-  margin:0;
+  margin: 0;
+  padding: 0;
+  font-family: "Oswald", sans-serif;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
   user-select: none;
-  -ms-user-select: none;
-  padding:0;
- font-family: "Oswald", sans-serif;
-  height:100%;
-  width:100%;
-  overflow: hidden;  /* Asegúrate de que no haya scroll innecesario */
 }
 
 #launcher-container {
-
-  background: url("https://wallpapers.com/images/hd/pixel-art-background-evf0fmyvu0u03yt2.jpg")
-    no-repeat center center;
+  background: url("https://wallpapers.com/images/hd/pixel-art-background-evf0fmyvu0u03yt2.jpg") no-repeat center center;
   background-size: cover;
-  border-radius: 0px 0px 15px 15px;
-  position: relative;
   display: flex;
-  justify-content: space-between; /* Para separar el sidebar del contenedor */
+  justify-content: space-between;
   align-items: center;
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+.title-bar {
+  height: 30px;
   width: 100%;
+  background: #242424;
+  border-radius: 15px 15px 0 0;
 }
-.title-bar{
 
-      height: 30px;
-     width: 100%;
-background:#242424;
-border-radius:15px 15px 0px 0px;
+.account-p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #242424;
+  border-radius: 20px;
+  color: white;
+  width: 90%;
+  max-width: 400px;
+  height: 80vh;
+  padding: 5px;
+  z-index: 9999;
 }
-.account-p{
-position:absolute;
-top:125px;
-  background:#242424;
-border-radius:20px;
-height:400px;
-color:white;
-padding:5px;
 
+.account-p .microsoft-log {
+  background: lightblue;
 }
-.account-p .microsoft-log{
-    background:lightblue;
 
-
+.title-bar .title-section {
+  padding: 1px 25px;
+  display: flex;
 }
-.title-bar .title-section{
-padding:1px;
-padding-left:25px;
 
-  display:flex;
+.title-bar .icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  background: url('assets/images/icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 10px;
 }
-   .title-bar .icon {
-      width: 24px;
-      border-radius:5px;
-      height: 24px;
-      background: url('assets/images/icon.png') no-repeat center center;
-      background-size: contain;
-      margin-right: 10px;
-    }
 
-    .title-bar .title {
-      font-size: 20px;
-color:white;
-    }
+.title-bar .title {
+  font-size: 20px;
+  color: white;
+}
 
-    .title-bar .window-controls {
-      display: block;
-      align-items: center;
-      -webkit-app-region: no-drag; /* Permite hacer clic en botones */
-    }
+.title-bar .window-controls {
+  display: flex;
+  align-items: center;
+  -webkit-app-region: no-drag;
+}
 
-    .title-bar .window-controls button {
-      background: none;
+.title-bar .window-controls button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-      border: none;
-      color: white;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-
-    .title-bar .window-controls button:hover {
-      background-color: red;
-    }
-
-
-
-
+.title-bar .window-controls button:hover {
+  background-color: red;
+}
 
 @keyframes pulse {
-  0% {
+  0%, 100% {
     transform: scale(1) rotate(30deg);
   }
   50% {
     transform: scale(1.1) rotate(30deg);
-  }
-  100% {
-    transform: scale(1) rotate(30deg);
   }
 }
 
 #event-popup {
   display: none;
   position: absolute;
-  top: 80px;
-  left: 275px;
+  top: 10vh;
+  left: calc(50% - 147.5px);
   width: 295px;
   background-color: rgba(50, 50, 50, 0.9);
   color: white;
@@ -112,17 +106,19 @@ color:white;
   padding: 10px;
   z-index: 10;
 }
-#mission-content{
-width:510px;
-margin-top:5px;
-background:#242424; 
-padding:5px;
-color:white;
-border-radius:20px;
+
+#mission-content {
+  width: 90%;
+  max-width: 510px;
+  background: #242424;
+  padding: 5px;
+  color: white;
+  border-radius: 20px;
+  margin: 5px auto;
 }
 
 #launcher-container #sidebar {
-  background-color: rgba(50, 50, 50, 0.9); /* Color más sólido */
+  background-color: rgba(50, 50, 50, 0.9);
   width: 250px;
   height: 100%;
   position: fixed;
@@ -130,45 +126,41 @@ border-radius:20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px 0px 0px 15px;
-
+  padding: 15px;
 }
 
- #sidebar #user-info {
-margin-top:10px;
-background:#242424;
-color:white;
-  border-radius:5px;
-  display: flex; /* Para alinear el nombre y la skin en línea */
-  align-items: center; /* Centrar verticalmente */
+#sidebar #user-info {
+  background: #242424;
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
   margin-bottom: 15px;
-  width: 100%; /* Ancho completo */
+  width: 100%;
+  padding: 10px;
 }
 
- #sidebar #user-info img {
-padding-right:5px;
+#sidebar #user-info img {
   width: 64px;
   height: 64px;
   border-radius: 15px;
-  margin-right: 10px; /* Espacio entre el nombre y la skin */
+  margin-right: 10px;
 }
 
 button {
   background-color: rgba(80, 80, 80, 0.9);
-  color: white; 
-font-family: "Oswald", sans-serif;
-  margin: 5px 0;
-  width: 250px;
+  color: white;
+  width: 100%;
   height: 40px;
   font-size: 16px;
   cursor: pointer;
-  display: flex;
-padding:5px;
-padding-top:10px;
-padding-bottom:10px;
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {
@@ -177,33 +169,33 @@ button:hover {
 }
 
 button i {
-padding-right:25px;
+  margin-right: 10px;
   font-size: 18px;
 }
 
 #launcher-container #content {
-  display: relative;
-margin-left:280px;
- height:500px;
-  justify-content: left;
-  align-items: left;
-  text-align: left;
+  margin-left: 280px;
   padding: 5px;
-  width: calc(750px - 270px); /* Resta el ancho del sidebar */
-}
- #content .titles 
- {
-  font-size: 20px;
-      background: url('assets/images/OverMaster.webp') no-repeat center center rgba(50, 50, 50, 0.9);
-width:515px;  
-height:100px;
-align-items: center;
-  text-align:center;
-  border-radius:5px;
-  color: white;
-margin-top:-60px;
+  width: calc(100% - 280px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
+#content .titles {
+  font-size: 20px;
+  background: url('assets/images/OverMaster.webp') no-repeat center center rgba(50, 50, 50, 0.9);
+  width: 100%;
+  max-width: 515px;
+  height: 100px;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  margin: -60px auto 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 #title {
   font-size: 36px;
@@ -211,51 +203,48 @@ margin-top:-60px;
   margin-bottom: 20px;
 }
 
-
-
 #mission-icon {
-  position:absolute;
+  position: absolute;
   font-size: 40px;
   color: red;
   animation: pulse 1s infinite;
   transform: rotate(30deg);
   cursor: pointer;
- bottom: 40px;
+  bottom: 40px;
   right: 5px;
 }
 
 #loading-bar {
   display: none;
-border-radius:20px;
   width: 90%;
   height: 10px;
   background-color: black;
-  margin-top: auto; /* Para alinear la barra en la parte inferior */
-  margin-bottom: 10px; /* Añadir algo de espacio debajo de la barra */
+  border-radius: 20px;
+  margin: 10px 0;
 }
 
 #progress {
   background-color: green;
   height: 100%;
-  width: 0%; /* Iniciar con 0% de ancho */
+  width: 0%;
 }
 
-/* Login Popup */
 #login-popup {
- position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 9999;
+  z-index: 10000;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #login-popup iframe {
-  width: 500px;
+  width: 90%;
+  max-width: 500px;
   height: 300px;
   border-radius: 15px;
   border: none;
@@ -272,26 +261,22 @@ border-radius:20px;
   cursor: pointer;
 }
 
-    /* Estilos para los popups */
-    .popup {
-  position: absolute;
-  margin-left:258px;
- top:50%;
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 476px;
-      background-color:#242424;
+  width: 90%;
+  max-width: 476px;
+  background-color: #242424;
   color: white;
   padding: 20px;
   border-radius: 10px;
   z-index: 1001;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
-.popup-content {
-      background-color: #242424;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
+
 .close-btn {
   position: absolute;
   top: 10px;
@@ -300,7 +285,6 @@ border-radius:20px;
   font-size: 18px;
   color: white;
 }
-
 
 
 .tree {
