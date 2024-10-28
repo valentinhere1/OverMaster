@@ -16,8 +16,8 @@ const minecraftDirectory = `C:/Users/${userWindow}/AppData/Roaming/.minecraft`;
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
-    width: 850,
-    height: 650,
+    width: 950,
+    height: 700,
     resizable: false,
     frame: false,
     transparent: true,
