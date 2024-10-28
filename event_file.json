@@ -1,8 +1,8 @@
 {
   "tipo": "🔔 Misiones de la semana: 3da semana Watones",
   "titulo": "📅 Fecha límite: Domingo 3 de Noviembre, 19:00 hrs",
-  "contenido": "💫 Recompensas: 1  estrella por el cumplimiento de la misión,💀 Penalización: 1 calavera por no completar las misiones.",
-  "lista": "1️⃣ Misión principal de la semana: (todos los rangos), Subir de rango usando el comando /rankup. Al menos superar el rango Principiante N°1., Construir la base de aldeanos., 2️⃣ Objetivos adicionales por rango: @⬧⎾⚔️⏋ Recluta, Conseguir recursos necesarios., Mejorar la base principal del clan., objetivos para los rangos superiores @⬧⎾📕⏋Maestro Fundador y @⬧⎾🗂️ ⏋ Gran Maestro, Queda a su elección el hacer la misión principal o organizar mejor la base principal en términos de espacio."
+  "contenido": "💫 Recompensas: 1  estrella por el cumplimiento de la misión 💀 Penalización: 1 calavera por no completar las misiones.",
+  "lista": "1️⃣ Misión principal de la semana: (todos los rangos), Subir de rango usando el comando /rankup. Al menos superar el rango Principiante N°1."
   "icon": "warning",
   "icon_color": "red",
   "urgency": "high"
