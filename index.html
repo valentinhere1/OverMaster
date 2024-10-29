@@ -132,7 +132,7 @@
         document.getElementById('settings-popup').style.display = 'block';
       });
 
-      document.getElementById('mission-icon').addEventListener('click', loadMissionData);
+      
 
       function saveVersion() {
         const selectedVersion = document.querySelector('input[name="version"]:checked');
@@ -159,6 +159,14 @@
           popup.style.display = 'none';
         });
       }
+  document.addEventListener("DOMContentLoaded", () => {
+    // Mostrar el popup de misión al hacer clic en el ícono
+    document.getElementById('mission-icon').addEventListener('click', loadMissionData);
+
+    // Cerrar el popup de misión al hacer clic en el botón de cierre
+    document.getElementById('close-mission-popup').addEventListener('click', () => {
+      document.getElementById('mission-popup').style.display = 'none';
+    });
 
       async function loadMissionData() {
         try {
