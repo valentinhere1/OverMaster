@@ -73,16 +73,13 @@
       </div>
 
       <!-- Popup de misión -->
-      <i id="mission-icon" class="bx bx-error-circle mission-icon"></i>
-      <div id="mission-popup" style="display: none;">
-        <div id="mission-content">
-          <h2 id="mission-title"></h2>
-          <p id="mission-type"></p>
-          <p id="mission-body"></p>
-          <ul id="mission-list"></ul>
-          <button id="close-mission-popup">Cerrar</button>
-        </div>
-      </div>
+ <i id="mission-icon" class="bx bx-error-circle mission-icon"></i>
+<div id="mission-popup" style="display: none;">
+  <div id="mission-content">
+    <!-- Contenido de la misión se cargará aquí -->
+  </div>
+  <button id="close-mission-popup">Cerrar</button>
+</div>
 
       <!-- Popup de inicio de sesión -->
       <div id="account-popup" class="popup" style="display:block;">
@@ -159,29 +156,53 @@
           popup.style.display = 'none';
         });
       }
-  document.addEventListener("DOMContentLoaded", () => {
-    // Mostrar el popup de misión al hacer clic en el ícono
-    document.getElementById('mission-icon').addEventListener('click', loadMissionData);
+ document.addEventListener("DOMContentLoaded", () => {
+  // Mostrar el popup de misión al hacer clic en el ícono
+  document.getElementById('mission-icon').addEventListener('click', loadMissionData);
 
-    // Cerrar el popup de misión al hacer clic en el botón de cierre
-    document.getElementById('close-mission-popup').addEventListener('click', () => {
-      document.getElementById('mission-popup').style.display = 'none';
-    });
+  // Cerrar el popup de misión al hacer clic en el botón de cierre
+  document.getElementById('close-mission-popup').addEventListener('click', () => {
+    document.getElementById('mission-popup').style.display = 'none';
+  });
 
-      async function loadMissionData() {
-        try {
-          const response = await fetch('https://raw.githubusercontent.com/valentinhere1/OverMaster/main/event_file.json');
-          const data = await response.json();
-          document.getElementById('mission-title').textContent = data.titulo;
-          document.getElementById('mission-type').textContent = data.tipo;
-          document.getElementById('mission-body').textContent = data.contenido;
-          document.getElementById('mission-list').innerHTML = data.lista.split(', ').map(item => `<li>${item}</li>`).join('');
-          document.getElementById('mission-popup').style.display = 'block';
-        } catch (error) {
-          console.error('Error al cargar el archivo JSON:', error);
-        }
-      }
-    });
+  // Función para cargar y mostrar los datos de la misión
+  async function loadMissionData() {
+    try {
+      const response = await fetch('https://raw.githubusercontent.com/valentinhere1/OverMaster/main/event_file.json');
+      const data = await response.json();
+
+      const missionContent = document.getElementById('mission-content');
+      missionContent.innerHTML = ''; // Limpiar contenido anterior
+
+      // Generar el contenido HTML para cada misión
+      data.misiones.forEach(mission => {
+        const missionHTML = `
+          <div class="mission-item">
+            <h2 class="mission-title">${mission.titulo}</h2>
+            <p class="mission-subtitle">${mission.subtitulo}</p>
+            <p class="mission-body">${highlightMentions(mission.contenido)}</p>
+            <ul class="mission-list">
+              ${mission.lista.map(item => `<li>${highlightMentions(item)}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+        missionContent.innerHTML += missionHTML; // Añadir misión al contenido
+      });
+
+      document.getElementById('mission-popup').style.display = 'flex'; // Mostrar el popup
+
+    } catch (error) {
+      console.error('Error al cargar el archivo JSON:', error);
+    }
+  }
+});
+
+// Función para resaltar menciones en la misión
+function highlightMentions(text) {
+  return text.replace(/(@\w+)/g, '<span class="mention">$1</span>');
+}
+
+
   </script>
 </body>
 </html>
