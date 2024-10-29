@@ -300,3 +300,45 @@ button i {
   font-size: 1.2em;
   margin: 0;
 }
+
+
+.mission-item {
+  border-left: 5px solid yellow;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #2f3136;
+  color: white;
+  border-radius: 8px;
+}
+
+.mission-title {
+  font-size: 1.3em;
+  color: #f9c74f;
+  font-weight: bold;
+}
+
+.mission-subtitle {
+  font-size: 0.9em;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.mission-body {
+  font-size: 1em;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.mission-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.mission-list li {
+  margin: 5px 0;
+}
+
+.mention {
+  color: #7289da; /* Color especial para menciones */
+  font-weight: bold;
+}
