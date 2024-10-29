@@ -373,6 +373,26 @@ background:#242424;
   font-weight: bold;
 }
 
+/* Estilos para el mensaje emergente */
+.notification-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  background-color: #f9c74f;
+  color: #2f3136;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1004;
+  opacity: 0; /* Oculto por defecto */
+  transition: opacity 0.5s ease; /* Suavizado en la transición */
+}
+
+/* Mostrar el popup */
+.notification-popup.show {
+  opacity: 1;
+}
 
 
 .tree {
